@@ -1,0 +1,10 @@
+spec:
+  clusterIP: 10.105.204.63
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: product-api
+  type: NodePort
+

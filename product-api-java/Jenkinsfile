@@ -1,0 +1,46 @@
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+        stage('Build') {
+            steps {
+                // Maven build (skip tests for speed)
+                sh 'mvn -B -DskipTests clean package'
+            }
+        }
+        stage('Docker Build') {
+            steps {
+                // Build Docker image for Kubernetes
+                sh 'eval $(minikube docker-env)'
+                sh 'docker build -t product-api:latest .'
+            }
+        }
+        stage('Deploy to Kubernetes') {
+            steps {
+                // Deploy Deployment + Service
+                sh 'kubectl apply -f ../k8s/deployment.yaml'
+                sh 'kubectl apply -f ../k8s/service.yaml'
+            }
+        }
+        stage('Test Deployment') {
+            steps {
+                // Run automated test script
+                sh 'chmod +x ./check_project.sh'
+                sh './check_project.sh'
+            }
+        }
+    }
+    post {
+        success {
+            echo "✅ CI/CD pipeline completed successfully!"
+        }
+        failure {
+            echo "❌ CI/CD pipeline failed. Check console output."
+        }
+    }
+}
+
