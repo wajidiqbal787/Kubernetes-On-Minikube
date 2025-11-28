@@ -1,0 +1,57 @@
+pipeline {
+    agent any
+
+    environment {
+        IMAGE_NAME = "nodejs-hello-app"
+        IMAGE_TAG = "1.0"
+        DOCKER_REGISTRY = "docker.io/<YOUR_DOCKERHUB_USERNAME>"
+        K8S_DEPLOYMENT_FILE = "nodejs-hello-app/deployment.yaml"
+    }
+
+    stages {
+        stage('Checkout Code') {
+            steps {
+                git branch: 'main', url: 'https://github.com/wajidiqbal787/Kubernetes-On-Minikube.git'
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                sh 'cd nodejs-hello-app && npm install'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                sh """
+                eval \$(minikube -p minikube docker-env)
+                docker build -t $DOCKER_REGISTRY/$IMAGE_NAME:$IMAGE_TAG nodejs-hello-app
+                """
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    sh "echo \$PASSWORD | docker login -u \$USERNAME --password-stdin"
+                    sh "docker push $DOCKER_REGISTRY/$IMAGE_NAME:$IMAGE_TAG"
+                }
+            }
+        }
+
+        stage('Deploy to Kubernetes') {
+            steps {
+                sh "kubectl apply -f $K8S_DEPLOYMENT_FILE"
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Deployment Successful! 🎉'
+        }
+        failure {
+            echo 'Deployment Failed ❌'
+        }
+    }
+}
