@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simple-dotnet-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: simple-dotnet-api
+  template:
+    metadata:
+      labels:
+        app: simple-dotnet-api
+    spec:
+      containers:
+      - name: simple-dotnet-api
+        image: YOUR_DOCKERHUB_USERNAME/simple-dotnet-api:latest   # OR simple-dotnet-api:latest if you loaded into minikube
+        imagePullPolicy: Always   # if using minikube/local set to IfNotPresent
+        ports:
+        - containerPort: 80
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: "Production"
+
