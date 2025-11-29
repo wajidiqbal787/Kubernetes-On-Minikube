@@ -1,0 +1,68 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKERHUB_CREDENTIALS = 'dockerhub-creds' // Jenkins credentials ID
+        IMAGE_NAME = 'wajidiqbal787/simple-dotnet-api'
+        K8S_DEPLOYMENT = 'simple-dotnet-api'
+        K8S_NAMESPACE = 'default'
+    }
+
+    stages {
+
+        stage('Checkout Code') {
+            steps {
+                git branch: 'main', url: 'https://github.com/wajidiqbal787/Kubernetes-On-Minikube.git'
+            }
+        }
+
+        stage('Build .NET Core Project') {
+            steps {
+                dir('simple-dotnet-api/SimpleDotnetApi') {
+                    sh 'dotnet restore'
+                    sh 'dotnet build --configuration Release'
+                    sh 'dotnet publish -c Release -o publish'
+                }
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                dir('simple-dotnet-api/SimpleDotnetApi') {
+                    sh "docker build -t ${IMAGE_NAME}:latest ."
+                }
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: "${DOCKERHUB_CREDENTIALS}", 
+                                                  passwordVariable: 'DOCKER_PASS', 
+                                                  usernameVariable: 'DOCKER_USER')]) {
+                    sh "echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin"
+                    sh "docker push ${IMAGE_NAME}:latest"
+                }
+            }
+        }
+
+        stage('Deploy to Kubernetes') {
+            steps {
+                // Optional: if you are using kubectl config in Jenkins node
+                sh """
+                kubectl set image deployment/${K8S_DEPLOYMENT} ${K8S_DEPLOYMENT}=${IMAGE_NAME}:latest --namespace=${K8S_NAMESPACE} || \
+                kubectl apply -f k8s/deployment.yaml
+                kubectl rollout status deployment/${K8S_DEPLOYMENT} --namespace=${K8S_NAMESPACE}
+                """
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "✅ Pipeline completed successfully!"
+        }
+        failure {
+            echo "❌ Pipeline failed!"
+        }
+    }
+}
