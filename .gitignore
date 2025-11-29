@@ -4,3 +4,5 @@ obj/
 *.dll
 *.pdb
 *.sourcelink.json
+Kubernetes-On-Minikube/
+product-api-java/Kubernetes-On-Minikube/
