@@ -20,3 +20,5 @@ nohup: ignoring input
 2025-12-02T02:08:18.425Z  INFO 128984 --- [simple-springboot-app] [0.0-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
 2025-12-02T02:08:18.426Z  INFO 128984 --- [simple-springboot-app] [0.0-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
 2025-12-02T02:08:18.430Z  INFO 128984 --- [simple-springboot-app] [0.0-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2025-12-02T02:39:53.577Z  INFO 128984 --- [simple-springboot-app] [ionShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2025-12-02T02:39:53.593Z  INFO 128984 --- [simple-springboot-app] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
