@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: golang-minikube-config
+  namespace: dev
+data:
+  APP_NAME: "Wajid"
+  PORT: "8080"

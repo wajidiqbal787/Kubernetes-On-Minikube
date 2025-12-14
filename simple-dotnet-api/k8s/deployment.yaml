@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simple-dotnet-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: simple-dotnet-api
+  template:
+    metadata:
+      labels:
+        app: simple-dotnet-api
+    spec:
+      containers:
+        - name: simple-dotnet-api
+          image: simple-dotnet-api:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: "Production"
+

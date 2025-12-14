@@ -1,0 +1,24 @@
+nohup: ignoring input
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.0.0)
+
+2025-12-02T02:07:49.729Z  INFO 128984 --- [simple-springboot-app] [           main] c.e.demo.SimpleSpringbootAppApplication  : Starting SimpleSpringbootAppApplication v0.0.1-SNAPSHOT using Java 17.0.17 with PID 128984 (/home/ec2-user/Kubernetes-On-Minikube/simple-springboot-app/target/demo-0.0.1-SNAPSHOT.jar started by ec2-user in /home/ec2-user/Kubernetes-On-Minikube/simple-springboot-app)
+2025-12-02T02:07:49.743Z  INFO 128984 --- [simple-springboot-app] [           main] c.e.demo.SimpleSpringbootAppApplication  : No active profile set, falling back to 1 default profile: "default"
+2025-12-02T02:07:51.742Z  INFO 128984 --- [simple-springboot-app] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2025-12-02T02:07:51.766Z  INFO 128984 --- [simple-springboot-app] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-12-02T02:07:51.767Z  INFO 128984 --- [simple-springboot-app] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.14]
+2025-12-02T02:07:51.831Z  INFO 128984 --- [simple-springboot-app] [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1902 ms
+2025-12-02T02:07:52.497Z  INFO 128984 --- [simple-springboot-app] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2025-12-02T02:07:52.515Z  INFO 128984 --- [simple-springboot-app] [           main] c.e.demo.SimpleSpringbootAppApplication  : Started SimpleSpringbootAppApplication in 4.042 seconds (process running for 5.104)
+2025-12-02T02:08:18.425Z  INFO 128984 --- [simple-springboot-app] [0.0-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-12-02T02:08:18.426Z  INFO 128984 --- [simple-springboot-app] [0.0-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-12-02T02:08:18.430Z  INFO 128984 --- [simple-springboot-app] [0.0-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2025-12-02T02:39:53.577Z  INFO 128984 --- [simple-springboot-app] [ionShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2025-12-02T02:39:53.593Z  INFO 128984 --- [simple-springboot-app] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete

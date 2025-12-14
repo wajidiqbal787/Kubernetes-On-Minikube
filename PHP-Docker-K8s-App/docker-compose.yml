@@ -1,0 +1,8 @@
+services:
+  php-app:
+    image: php:8.2-apache
+    container_name: php-hello-app
+    volumes:
+      - ./index.php:/var/www/html/index.php
+    ports:
+      - "8081:80"

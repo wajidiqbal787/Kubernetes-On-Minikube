@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: golang-minikube-deployment
+  namespace: dev
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: golang-minikube
+  template:
+    metadata:
+      labels:
+        app: golang-minikube
+    spec:
+      containers:
+        - name: golang-minikube
+          image: golang-minikube-app:latest
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: golang-minikube-config
+            - secretRef:
+                name: golang-minikube-secret
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
